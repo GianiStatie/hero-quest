@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://d2pv5bsm55vno"]
+
+[ext_resource type="Texture2D" uid="uid://ddjol50xf27g5" path="res://gradient.tres" id="1_ja0kc"]
+[ext_resource type="Shader" path="res://map.gdshader" id="2_rijwc"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mdllc"]
+frequency = 0.0478
+fractal_gain = 0.86
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fyikt"]
+width = 128
+height = 128
+seamless = true
+seamless_blend_skirt = 0.35
+noise = SubResource("FastNoiseLite_mdllc")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrxoi"]
+shader = ExtResource("2_rijwc")
+shader_parameter/density = 1.0
+shader_parameter/speed = Vector2(0.2, 0.1)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_fyikt")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dowjf"]
+
+[node name="HiddenZone" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0.811765, 0.509804, 0.329412, 1)
+z_index = 1
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("1_ja0kc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.380392)
+z_index = 1
+material = SubResource("ShaderMaterial_mrxoi")
+scale = Vector2(128, 128)
+texture = SubResource("CanvasTexture_dowjf")
+region_rect = Rect2(144, 96, 16, 16)
